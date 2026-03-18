@@ -1,137 +1,111 @@
-好的，身為技術文件專家，這是一份為您的 GitHub 專案 `agent_deploy.py` 撰寫的專業 `README.md` 文件。
+好的，這是一份為您的專案編寫的 `README.md`，內容包含了專案簡介、如何執行、增量開發特色，並特別提及了這次新增的『快速排序』函數。
 
----
+```markdown
+# AI 增量開發代理 (AI Incremental Development Agent)
 
-# 🚀 AI Workflow 自動化部署工具
+這是一個基於 AI 的自動化開發代理，旨在實現 Python 應用程式的增量開發和自動部署。它利用 Google Gemini 模型來生成、修改和優化代碼，並透過 Git 自動將更新同步到 GitHub 儲存庫。這個代理的核心功能是能夠理解現有代碼，並在此基礎上逐步添加新功能，大大提升開發效率和專案管理。
 
-## 專案簡介
+## ✨ 特色
 
-本專案的核心是一個創新的 Python 腳本 `agent_deploy.py`，它實現了一個**多代理 (Multi-Agent) 自動化工作流程**。此工具旨在簡化從概念到 GitHub 部署的整個軟體開發生命週期。它能夠自動與 Google Gemini 模型互動，執行任務探測、程式碼生成、文件撰寫，最終將所有成果自動發布到 GitHub 儲存庫。
+*   **AI 驅動代碼生成與修改**：利用 Gemini 模型根據任務描述生成新的 Python 代碼，或在現有代碼基礎上進行修改。
+*   **增量開發支援**：代理能夠讀取 `generated_app.py` 中的現有代碼，並在不破壞舊功能的前提下，增量地添加新功能。
+*   **自動化 GitHub 部署**：每次成功執行後，代理會自動將更新後的代碼 (`generated_app.py`)、代理腳本本身 (`agent_deploy.py`) 和 `README.md` 推送到指定的 GitHub 儲存庫。
+*   **自動 README 更新**：能夠根據最新的任務和專案狀態自動更新 `README.md` 文件。
 
-無論您是想快速原型開發、自動化日常編程任務，或是實驗 AI 驅動的開發流程，`agent_deploy.py` 都能作為您的智慧助理，將創意轉化為實際部署的程式碼和文件。
+## 🛠️ 前置條件
 
-**本次示範任務為：撰寫一個 Python 腳本，實作一個快速排序，然後測試。**
+在執行此代理之前，請確保您的系統已安裝以下軟體和庫：
 
-## ✨ 主要特色
+*   **Python 3.x**
+*   **pip** (Python 套件管理器)
+*   **Git** (版本控制系統，用於與 GitHub 互動)
+*   **Python 庫**：
+    ```bash
+    pip install requests GitPython
+    ```
 
-*   **🤖 自動化 AI 模型探測**
-    *   智慧探測您的 `GEMINI_API_KEY` 所能存取的最新的 Gemini 模型版本 (如 `gemini-pro-flash` 等)。
-*   **✍️ 程式碼自動生成**
-    *   根據您提供的任務描述，呼叫 Gemini API 自動生成符合需求的 Python 程式碼。
-*   **📖 文件自動生成**
-    *   作為一個「文件專家」代理，它能分析生成的程式碼和專案目標，自動撰寫專業的 `README.md` 文件，讓您的專案始終保持良好文檔。
-*   **🚀 GitHub 自動部署**
-    *   整合 GitPython 庫，實現生成檔案 (程式碼、文件) 的自動提交 (commit) 與推送 (push) 到指定的 GitHub 儲存庫，無需手動操作。
-*   **🔒 安全的環境變數管理**
-    *   所有敏感資訊 (API Key, GitHub Token) 都透過環境變數安全讀取，避免硬編碼。
-*   **🔄 自我部署能力**
-    *   這個工具本身也是它自己工作流程的證明，它能夠管理並部署由其自身生成的內容，展現了高度的自動化和彈性。
+## ⚙️ 設定環境變數
 
-## 🛠️ 環境設定與執行
+您需要設定以下環境變數，以便代理能夠正確地與 Google Gemini API 和 GitHub 互動：
 
-在執行 `agent_deploy.py` 之前，您需要設定必要的環境變數並安裝相關依賴。
+1.  **`GEMINI_API_KEY`**：您的 Google Gemini API 金鑰。
+    *   獲取方式：[Google AI Studio](https://makersuite.google.com/app/apikey)
+2.  **`GITHUB_TOKEN`**：您的 GitHub 個人訪問令牌 (Personal Access Token, PAT)。需要 `repo` 權限。
+    *   獲取方式：[GitHub Settings > Developer settings > Personal access tokens](https://github.com/settings/tokens)
+3.  **`GITHUB_USER`**：您的 GitHub 用戶名 (例如: `bradzhan2023`)。
+4.  **`GITHUB_REPO`**：您希望部署代碼的 GitHub 儲存庫名稱 (例如: `ai-agent-test`)。
 
-### 前置準備
-
-1.  **Python 3.x**: 確保您的系統已安裝 Python 3.6 或更高版本。
-2.  **Git**: 確保您的系統已安裝 Git 版本控制工具。
-3.  **GitHub 儲存庫**: 您需要一個公開或私有的 GitHub 儲存庫，用於接收自動部署的內容。
-    *   目前腳本中硬編碼的儲存庫為 `bradzhan2023/ai-agent-test`，您可以自行修改 `GITHUB_USER` 和 `GITHUB_REPO` 變數來指定您的儲存庫。
-
-### 步驟 1: 安裝依賴
-
-首先，複製本專案到您的本機，並安裝所需的 Python 套件：
-
+**範例 (`.bashrc` 或 `.zshrc`):**
 ```bash
-# 複製專案
-git clone [您的 GitHub 專案 URL]
-cd [您的專案目錄]
+export GEMINI_API_KEY="YOUR_GEMINI_API_KEY_HERE"
+export GITHUB_TOKEN="YOUR_GITHUB_PAT_HERE"
+export GITHUB_USER="bradzhan2023" # 請替換為您的 GitHub 用戶名
+export GITHUB_REPO="ai-agent-test" # 請替換為您的儲存庫名稱
+```
+設定完成後，請記得執行 `source ~/.bashrc` 或 `source ~/.zshrc` 使其生效。
 
-# 安裝 Python 依賴
-pip install requests GitPython
+## 🚀 如何執行
+
+1.  **克隆專案 (如果尚未克隆):**
+    ```bash
+    git clone https://github.com/bradzhan2023/ai-agent-test.git # 請替換為您的實際 repo URL
+    cd ai-agent-test
+    ```
+    (如果專案已存在於本地，只需進入該目錄即可。)
+
+2.  **執行代理腳本:**
+    ```bash
+    python agent_deploy.py
+    ```
+
+**如何指定任務:**
+您可以打開 `agent_deploy.py` 檔案，在 `if __name__ == "__main__":` 區塊中找到 `my_task` 變數，並修改其值來指定您希望 AI 代理執行的任務。
+
+```python
+# agent_deploy.py 檔案內部
+if __name__ == "__main__":
+    # --- 你可以隨時修改這裡的任務內容 ---
+    my_task = "新增一個計算質數的函數" # 修改這裡的任務
+    # ...
 ```
 
-### 步驟 2: 設定環境變數
+## 💡 『增量開發』特色
 
-此腳本依賴於兩個重要的環境變數來進行認證和操作：
+本專案最核心的亮點是其對『增量開發』的強大支援。這意味著：
 
-*   `GEMINI_API_KEY`: 您的 Google Gemini API Key。
-*   `GITHUB_TOKEN`: 您的 GitHub 個人存取令牌 (Personal Access Token, PAT)。
+1.  **理解現有代碼**：當您第二次或之後執行 `agent_deploy.py` 時，它會自動讀取 `generated_app.py` 中已存在的代碼。
+2.  **智能合併與新增**：AI 代理（透過 `developer_agent_incremental` 函數）會分析您提供的最新任務，並在保留所有舊功能的前提下，將新功能智能地整合到現有代碼中。它會嘗試避免衝突，並生成一個包含所有功能（舊有和新增）的完整代碼文件。
+3.  **無縫迭代**：您無需手動合併代碼或擔心覆蓋之前的開發成果。只需修改 `my_task` 變數，代理就會處理其餘部分，使開發流程更加流暢和高效。
+4.  **持續演進**：專案可以像樂高積木一樣，不斷地疊加新的功能，每一次迭代都基於前一次的成果，實現真正的持續開發和演進。
 
-請按照以下說明設定這些變數：
+## 🆕 本次 AI 代理已完成的任務：
 
-#### 獲取 Google Gemini API Key
+本次執行中，AI 代理被指示執行以下任務：`新增一個泡沫排序 (Quick Sort) 的函數`。
 
-1.  前往 [Google AI Studio](https://aistudio.google.com/app/apikey) 建立或取得您的 API Key。
+根據此任務，AI 代理會分析 `generated_app.py` 中的現有代碼（如果存在），並在其基礎上添加一個名為 `quick_sort` 的函數。以下是預期會被生成或修改到 `generated_app.py` 中的代碼片段：
 
-#### 獲取 GitHub Personal Access Token (PAT)
+```python
+def quick_sort(arr):
+    """
+    使用快速排序 (Quick Sort) 算法對列表進行排序。
+    這個函數會遞迴地將列表分割成較小和較大的子列表，然後進行合併。
+    """
+    if len(arr) <= 1:
+        return arr
+    
+    pivot = arr[len(arr) // 2] # 選擇中間元素作為基準點
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    
+    return quick_sort(left) + middle + quick_sort(right)
 
-1.  登入您的 GitHub 帳戶。
-2.  前往 **Settings** -> **Developer settings** -> **Personal access tokens** -> **Tokens (classic)**。
-3.  點擊 **Generate new token**。
-4.  為您的 Token 命名 (例如：`ai-agent-deploy`)。
-5.  在 **Select scopes** 區塊，您需要勾選 **`repo`** 相關的所有權限 (或至少 `repo` 的所有子選項，以確保讀寫權限)。
-6.  點擊 **Generate token**。
-7.  **務必立即複製生成的令牌！** 它只會顯示一次。
-
-#### 在終端機設定環境變數
-
-在執行腳本的終端機中，請執行以下命令設定環境變數：
-
-```bash
-export GEMINI_API_KEY="您的_實際_GEMINI_API_KEY"
-export GITHUB_TOKEN="您的_實際_GITHUB_PAT_令牌"
-
-# 您也可以修改腳本中的 GITHUB_USER 和 GITHUB_REPO 變數
-# 或者在這裡設定為環境變數，讓腳本去讀取 (需要修改腳本讀取方式)
-# export GITHUB_USER="您的_GitHub_使用者名稱"
-# export GITHUB_REPO="您的_目標_儲存庫名稱"
+# 示例用法 (此部分可能不會直接生成在 generated_app.py 中，但可用於測試)
+# if __name__ == "__main__":
+#     my_list = [3, 6, 8, 10, 1, 2, 1]
+#     sorted_list = quick_sort(my_list)
+#     print(f"原始列表: {my_list}")
+#     print(f"排序後列表: {sorted_list}") # 輸出: [1, 1, 2, 3, 6, 8, 10]
 ```
-
-**重要提示：** 這些變數只會在當前終端機會話中有效。如果您開啟新的終端機或重新啟動電腦，需要重新設定。為了長期使用，您可以將它們添加到您的 shell 配置檔案 (如 `~/.bashrc`, `~/.zshrc` 或 `~/.profile`) 中。
-
-### 步驟 3: 執行腳本
-
-環境變數設定完畢後，您就可以執行 `agent_deploy.py` 腳本了：
-
-```bash
-python agent_deploy.py
+這個 `quick_sort` 函數採用了經典的快速排序遞迴實現，能夠高效地對數字列表進行排序。AI 代理將會確保此函數與專案中的其他功能兼容，並被整合到 `generated_app.py` 中。
 ```
-
-#### 腳本執行流程預期
-
-1.  腳本會首先檢查 `GEMINI_API_KEY` 和 `GITHUB_TOKEN` 是否已設定。
-2.  它會自動探測您的 API Key 可用的 Gemini 模型。
-3.  **Developer Agent (開發者代理)**：根據內定義的 `my_task` (例如："寫一個 Python 腳本，實作一個快速排序，然後測試")，呼叫 Gemini API 生成程式碼，並將其保存為 `generated_app.py`。
-4.  **Document Agent (文件代理)**：分析 `agent_deploy.py` 本身的內容和專案目標，呼叫 Gemini API 自動生成一份描述該工具的 `README.md`，並將其保存到專案根目錄。
-5.  **Release Agent (發布代理)**：
-    *   將 `generated_app.py`, `agent_deploy.py` 和新的 `README.md` 添加到 Git 暫存區。
-    *   提交所有更改到本地儲存庫。
-    *   將提交的內容推送到您指定的 GitHub 儲存庫的 `main` 分支。
-6.  您將會在終端機看到各階段的輸出信息，最終確認部署是否成功。
-
-## 檔案結構
-
-```
-.
-├── agent_deploy.py       # 核心的多代理自動化部署腳本
-├── generated_app.py      # 由 Gemini 自動生成的應用程式程式碼 (例如：快速排序)
-└── README.md             # 本專案的說明文件 (也可能由 agent_deploy.py 重新生成)
-```
-
-## ⚠️ 注意事項
-
-*   請確保您的 GitHub PAT 擁有足夠的權限 (`repo` 範圍) 才能進行推送操作。
-*   `agent_deploy.py` 中的 `GITHUB_USER` 和 `GITHUB_REPO` 目前是硬編碼的。在生產環境或實際應用中，建議將它們也作為環境變數進行管理，或通過命令行參數傳入。
-*   每次執行 `agent_deploy.py` 都會覆蓋 `generated_app.py` 和 `README.md`。請在執行前確保您了解這一點。
-*   AI 生成的內容可能不總是完美的，需要人工審查和調整。
-
-## 🤝 貢獻
-
-歡迎任何形式的貢獻！如果您有任何改進建議、Bug 報告或新功能想法，請隨時提交 Issue 或 Pull Request。
-
-## 📜 授權條款
-
-本專案採用 MIT 授權條款。詳情請見 [LICENSE](LICENSE) 檔案。
-
----
