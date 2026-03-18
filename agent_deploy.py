@@ -77,7 +77,7 @@ def github_release_agent(task_name, app_code, readme_content):
         print(f"❌ Git 操作失敗: {e}")
 
 if __name__ == "__main__":
-    my_task = "寫一個 Python 腳本，輸出 1 到 100 之間的質數"
+    my_task = "寫一個 Python 腳本，實作一個快速排序，然後測試"
     
     try:
         model_id, api_ver = get_available_model()

@@ -1,182 +1,137 @@
-好的，這是一份為您的 GitHub 專案 `ai-agent-test` 設計的專業 README.md 文件。這份文件以繁體中文撰寫，詳細介紹了您的 Multi-Agent 自動化工具及其功能，並說明瞭如何設定與執行。
+好的，身為技術文件專家，這是一份為您的 GitHub 專案 `agent_deploy.py` 撰寫的專業 `README.md` 文件。
 
 ---
 
-# AI 多代理自動化部署與程式碼生成工具
-## 目標專案：1-100 質數生成器
+# 🚀 AI Workflow 自動化部署工具
 
-![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python)
-![Gemini API](https://img.shields.io/badge/Google%20Gemini-API-orange?logo=google)
-![GitHub Actions](https://img.shields.io/badge/GitHub-Deployment-brightgreen?logo=github)
-![License](https://img.shields.io/badge/License-MIT-green) <!-- 假設使用 MIT 許可證 -->
+## 專案簡介
 
----
+本專案的核心是一個創新的 Python 腳本 `agent_deploy.py`，它實現了一個**多代理 (Multi-Agent) 自動化工作流程**。此工具旨在簡化從概念到 GitHub 部署的整個軟體開發生命週期。它能夠自動與 Google Gemini 模型互動，執行任務探測、程式碼生成、文件撰寫，最終將所有成果自動發布到 GitHub 儲存庫。
 
-## 🚀 專案簡介
+無論您是想快速原型開發、自動化日常編程任務，或是實驗 AI 驅動的開發流程，`agent_deploy.py` 都能作為您的智慧助理，將創意轉化為實際部署的程式碼和文件。
 
-這是一個創新的 Multi-Agent 自動化工具 `agent_deploy.py`，旨在簡化從想法到 GitHub 部署的整個開發流程。它融合了大型語言模型 (LLM) 的智慧與自動化腳本的力量，實現了**程式碼撰寫、文件生成及 GitHub 部署**的全自動化。
-
-目前，此工具已配置並成功生成一個 Python 腳本 (`generated_app.py`)，用於找出 1 到 100 之間的質數，並已將其連同自動生成的 `README.md` 部署到本 GitHub 儲存庫。這個專案本身就是 `agent_deploy.py` 成功運作的一個實例！
-
----
+**本次示範任務為：撰寫一個 Python 腳本，實作一個快速排序，然後測試。**
 
 ## ✨ 主要特色
 
-`agent_deploy.py` 腳本具備以下強大功能：
-
-*   **🔍 智慧模型探測**: 自動偵測並使用您 API Key 下可用的最新 Gemini 模型 (例如 Gemini Flash)。
-*   **📝 程式碼自動生成**: 根據給定的任務描述（例如「撰寫一個 Python 腳本，輸出 1 到 100 之間的質數」），利用 Gemini 模型自動撰寫 Python 程式碼。
-*   **📖 文件自動生成**: 根據生成的程式碼內容和專案目標，自動撰寫專業且符合規範的 `README.md` 文件。
-*   **🚀 GitHub 自動部署**: 自動將生成的程式碼 (`generated_app.py`) 和文件 (`README.md`)，連同 `agent_deploy.py` 本身，提交並推送到指定的 GitHub 儲存庫 (`bradzhan2023/ai-agent-test`)。
-*   **🔄 全自動化工作流程**: 從指令到部署，實現端到端的開發自動化，大幅提升開發效率。
-
----
-
-## 🎯 當前任務目標 (由 `agent_deploy.py` 執行)
-
-本專案的當前任務是生成一個名為 `generated_app.py` 的 Python 腳本，該腳本能夠找出並輸出 1 到 100 之間的所有質數。
-
-### `generated_app.py` 範例輸出：
-
-當您執行 `python generated_app.py` 時，預期會看到類似以下的輸出：
-
-```
-2
-3
-5
-7
-11
-13
-17
-19
-23
-29
-31
-37
-41
-43
-47
-53
-59
-61
-67
-71
-73
-79
-83
-89
-97
-```
-
----
+*   **🤖 自動化 AI 模型探測**
+    *   智慧探測您的 `GEMINI_API_KEY` 所能存取的最新的 Gemini 模型版本 (如 `gemini-pro-flash` 等)。
+*   **✍️ 程式碼自動生成**
+    *   根據您提供的任務描述，呼叫 Gemini API 自動生成符合需求的 Python 程式碼。
+*   **📖 文件自動生成**
+    *   作為一個「文件專家」代理，它能分析生成的程式碼和專案目標，自動撰寫專業的 `README.md` 文件，讓您的專案始終保持良好文檔。
+*   **🚀 GitHub 自動部署**
+    *   整合 GitPython 庫，實現生成檔案 (程式碼、文件) 的自動提交 (commit) 與推送 (push) 到指定的 GitHub 儲存庫，無需手動操作。
+*   **🔒 安全的環境變數管理**
+    *   所有敏感資訊 (API Key, GitHub Token) 都透過環境變數安全讀取，避免硬編碼。
+*   **🔄 自我部署能力**
+    *   這個工具本身也是它自己工作流程的證明，它能夠管理並部署由其自身生成的內容，展現了高度的自動化和彈性。
 
 ## 🛠️ 環境設定與執行
 
-要執行 `agent_deploy.py` 腳本並體驗其自動化功能，請遵循以下步驟：
+在執行 `agent_deploy.py` 之前，您需要設定必要的環境變數並安裝相關依賴。
 
-### 1. 前置條件
+### 前置準備
 
-*   **Python**: 建議使用 Python 3.8 或更高版本。
-*   **Git**: 確保您的系統已安裝 Git。
-*   **GitHub 儲存庫**: 您需要一個 GitHub 帳戶，並且對 `https://github.com/bradzhan2023/ai-agent-test` 儲存庫擁有寫入權限，或者您可以將 `agent_deploy.py` 檔案中的 `GITHUB_USER` 和 `GITHUB_REPO` 修改為您自己的儲存庫。
+1.  **Python 3.x**: 確保您的系統已安裝 Python 3.6 或更高版本。
+2.  **Git**: 確保您的系統已安裝 Git 版本控制工具。
+3.  **GitHub 儲存庫**: 您需要一個公開或私有的 GitHub 儲存庫，用於接收自動部署的內容。
+    *   目前腳本中硬編碼的儲存庫為 `bradzhan2023/ai-agent-test`，您可以自行修改 `GITHUB_USER` 和 `GITHUB_REPO` 變數來指定您的儲存庫。
 
-### 2. 克隆儲存庫
+### 步驟 1: 安裝依賴
 
-首先，將此 GitHub 儲存庫克隆到您的本地機器：
-
-```bash
-git clone https://github.com/bradzhan2023/ai-agent-test.git
-cd ai-agent-test
-```
-
-### 3. 安裝依賴項
-
-本專案需要安裝 `requests` 和 `GitPython` 庫。請透過 `pip` 安裝：
+首先，複製本專案到您的本機，並安裝所需的 Python 套件：
 
 ```bash
+# 複製專案
+git clone [您的 GitHub 專案 URL]
+cd [您的專案目錄]
+
+# 安裝 Python 依賴
 pip install requests GitPython
 ```
 
-### 4. 設定環境變數 (重要！)
+### 步驟 2: 設定環境變數
 
-為了安全地連接到 Gemini API 和 GitHub，您必須設定以下環境變數。**請勿將您的 API 金鑰或 Token 硬編碼在程式碼中。**
+此腳本依賴於兩個重要的環境變數來進行認證和操作：
 
-*   **`GEMINI_API_KEY`**: 您的 Google Gemini API 金鑰。
-    *   如何獲取：請訪問 [Google AI Studio](https://aistudio.google.com/app/apikey) 獲取您的 API 金鑰。
-*   **`GITHUB_TOKEN`**: 您的 GitHub 個人存取權杖 (Personal Access Token, PAT)。
-    *   如何獲取：
-        1.  登入 GitHub。
-        2.  進入 `Settings` -> `Developer settings` -> `Personal access tokens` -> `Tokens (classic)`。
-        3.  點擊 `Generate new token`。
-        4.  給予一個描述性名稱 (例如 "AI Agent Deploy")。
-        5.  **重要：** 授予權杖 `repo` 範圍的權限，這將允許其讀寫您的儲存庫。
-        6.  生成權杖後，請務必複製它，因為您將無法再次看到它。
+*   `GEMINI_API_KEY`: 您的 Google Gemini API Key。
+*   `GITHUB_TOKEN`: 您的 GitHub 個人存取令牌 (Personal Access Token, PAT)。
 
-在 Linux/macOS 終端機中設定環境變數：
+請按照以下說明設定這些變數：
+
+#### 獲取 Google Gemini API Key
+
+1.  前往 [Google AI Studio](https://aistudio.google.com/app/apikey) 建立或取得您的 API Key。
+
+#### 獲取 GitHub Personal Access Token (PAT)
+
+1.  登入您的 GitHub 帳戶。
+2.  前往 **Settings** -> **Developer settings** -> **Personal access tokens** -> **Tokens (classic)**。
+3.  點擊 **Generate new token**。
+4.  為您的 Token 命名 (例如：`ai-agent-deploy`)。
+5.  在 **Select scopes** 區塊，您需要勾選 **`repo`** 相關的所有權限 (或至少 `repo` 的所有子選項，以確保讀寫權限)。
+6.  點擊 **Generate token**。
+7.  **務必立即複製生成的令牌！** 它只會顯示一次。
+
+#### 在終端機設定環境變數
+
+在執行腳本的終端機中，請執行以下命令設定環境變數：
 
 ```bash
-export GEMINI_API_KEY="您的_Gemini_API_金鑰"
-export GITHUB_TOKEN="您的_GitHub_個人存取權杖"
+export GEMINI_API_KEY="您的_實際_GEMINI_API_KEY"
+export GITHUB_TOKEN="您的_實際_GITHUB_PAT_令牌"
+
+# 您也可以修改腳本中的 GITHUB_USER 和 GITHUB_REPO 變數
+# 或者在這裡設定為環境變數，讓腳本去讀取 (需要修改腳本讀取方式)
+# export GITHUB_USER="您的_GitHub_使用者名稱"
+# export GITHUB_REPO="您的_目標_儲存庫名稱"
 ```
 
-在 Windows 命令提示字元中設定環境變數：
+**重要提示：** 這些變數只會在當前終端機會話中有效。如果您開啟新的終端機或重新啟動電腦，需要重新設定。為了長期使用，您可以將它們添加到您的 shell 配置檔案 (如 `~/.bashrc`, `~/.zshrc` 或 `~/.profile`) 中。
 
-```cmd
-set GEMINI_API_KEY="您的_Gemini_API_金鑰"
-set GITHUB_TOKEN="您的_GitHub_個人存取權杖"
-```
+### 步驟 3: 執行腳本
 
-在 Windows PowerShell 中設定環境變數：
-
-```powershell
-$env:GEMINI_API_KEY="您的_Gemini_API_金鑰"
-$env:GITHUB_TOKEN="您的_GitHub_個人存取權杖"
-```
-
-### 5. 執行 `agent_deploy.py` 腳本
-
-設定好環境變數後，您就可以執行 `agent_deploy.py` 了：
+環境變數設定完畢後，您就可以執行 `agent_deploy.py` 腳本了：
 
 ```bash
 python agent_deploy.py
 ```
 
-當腳本執行時，您將在終端機中看到代理的工作流程：
+#### 腳本執行流程預期
 
-1.  自動探測可用的 Gemini 模型。
-2.  `[Developer]` 代理將根據任務 (找出 1 到 100 的質數) 撰寫 `generated_app.py` 的程式碼。
-3.  `[Document]` 代理將根據生成的程式碼內容自動生成一份新的 `README.md`。
-4.  `[Release Agent]` 代理將把 `generated_app.py`、新生成的 `README.md` 以及 `agent_deploy.py` 本身提交並推送到 GitHub 儲存庫。
+1.  腳本會首先檢查 `GEMINI_API_KEY` 和 `GITHUB_TOKEN` 是否已設定。
+2.  它會自動探測您的 API Key 可用的 Gemini 模型。
+3.  **Developer Agent (開發者代理)**：根據內定義的 `my_task` (例如："寫一個 Python 腳本，實作一個快速排序，然後測試")，呼叫 Gemini API 生成程式碼，並將其保存為 `generated_app.py`。
+4.  **Document Agent (文件代理)**：分析 `agent_deploy.py` 本身的內容和專案目標，呼叫 Gemini API 自動生成一份描述該工具的 `README.md`，並將其保存到專案根目錄。
+5.  **Release Agent (發布代理)**：
+    *   將 `generated_app.py`, `agent_deploy.py` 和新的 `README.md` 添加到 Git 暫存區。
+    *   提交所有更改到本地儲存庫。
+    *   將提交的內容推送到您指定的 GitHub 儲存庫的 `main` 分支。
+6.  您將會在終端機看到各階段的輸出信息，最終確認部署是否成功。
 
-**注意：** 每次執行 `agent_deploy.py`，它都會嘗試更新 `generated_app.py` 和 `README.md`，並將所有變更推送到 GitHub。
+## 檔案結構
 
----
+```
+.
+├── agent_deploy.py       # 核心的多代理自動化部署腳本
+├── generated_app.py      # 由 Gemini 自動生成的應用程式程式碼 (例如：快速排序)
+└── README.md             # 本專案的說明文件 (也可能由 agent_deploy.py 重新生成)
+```
 
-## ⚙️ 腳本結構與工作流程 (`agent_deploy.py`)
+## ⚠️ 注意事項
 
-`agent_deploy.py` 腳本主要包含以下模組化功能：
-
-*   **配置區域**: 安全地從環境變數讀取 API 金鑰和 GitHub 認證資訊。
-*   **`get_available_model()`**: 負責探測 Gemini API，找出最新且可用的模型 ID。
-*   **`call_gemini_api()`**: 封裝了對 Gemini API 的呼叫邏輯，用於生成文本（程式碼和文件）。
-*   **`github_release_agent()`**: 負責將生成的檔案寫入本地，並使用 `GitPython` 庫執行 Git 操作（新增、提交、推送）到 GitHub 儲存庫。
-*   **主執行流程 (`if __name__ == "__main__":`)**:
-    *   定義當前任務 (`my_task`)。
-    *   呼叫 `get_available_model()`。
-    *   呼叫 `call_gemini_api()` 以生成程式碼 (`clean_code`)。
-    *   讀取 `agent_deploy.py` 內容，並再次呼叫 `call_gemini_api()` 以生成 `README.md` (`readme_md`)。
-    *   最後，呼叫 `github_release_agent()` 將所有檔案部署到 GitHub。
-
----
+*   請確保您的 GitHub PAT 擁有足夠的權限 (`repo` 範圍) 才能進行推送操作。
+*   `agent_deploy.py` 中的 `GITHUB_USER` 和 `GITHUB_REPO` 目前是硬編碼的。在生產環境或實際應用中，建議將它們也作為環境變數進行管理，或通過命令行參數傳入。
+*   每次執行 `agent_deploy.py` 都會覆蓋 `generated_app.py` 和 `README.md`。請在執行前確保您了解這一點。
+*   AI 生成的內容可能不總是完美的，需要人工審查和調整。
 
 ## 🤝 貢獻
 
-歡迎任何形式的貢獻！如果您有任何建議、功能請求或發現錯誤，請隨時開立 Issue 或提交 Pull Request。
+歡迎任何形式的貢獻！如果您有任何改進建議、Bug 報告或新功能想法，請隨時提交 Issue 或 Pull Request。
 
----
+## 📜 授權條款
 
-## 📄 許可證
-
-本專案採用 MIT 許可證。詳情請參閱 `LICENSE` 檔案。(請在您的實際專案中添加一個 `LICENSE` 文件)
+本專案採用 MIT 授權條款。詳情請見 [LICENSE](LICENSE) 檔案。
 
 ---
