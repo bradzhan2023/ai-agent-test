@@ -1,13 +1,17 @@
-```python
-def is_prime(num):
-    if num <= 1:
+def is_prime(n):
+    if n < 2:
         return False
-    for i in range(2, int(num**0.5) + 1):
-        if num % i == 0:
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    i = 3
+    while i * i <= n:
+        if n % i == 0:
             return False
+        i += 2
     return True
 
-for number in range(1, 101):
-    if is_prime(number):
-        print(number)
-```
+for num in range(1, 101):
+    if is_prime(num):
+        print(num)
